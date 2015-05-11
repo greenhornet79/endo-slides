@@ -82,6 +82,8 @@ function en_slide_details( $post ) {
 
 	$link = get_post_meta( $post->ID, '_en_slide_link', true );
 	$mobile = get_post_meta( $post->ID, '_en_slide_mobile', true );
+	$slide_cb = get_post_meta( $post->ID, '_en_slide_mobile_cb', true );
+	$slide_select = get_post_meta( $post->ID, '_en_slide_select', true );
 	
 	wp_nonce_field( 'my_meta_box_nonce', 'meta_box_nonce' ); 
 			?>
@@ -103,6 +105,31 @@ function en_slide_details( $post ) {
 					</th>
 					<td>
 						<input type="text" class="large-text" id="en_slide_mobile" name="en_slide_mobile" value="<?php echo $mobile; ?>" />
+						
+					</td>
+				</tr>
+				<tr>
+					<th scope="row">
+						<label for="en_slide_mobile">A checkbox: </label>
+					</th>
+					<td>
+						<input type="checkbox" class="large-text" id="en_slide_mobile_cb" name="en_slide_mobile_cb" value="<?php echo $slide_cb; ?>" <?php checked( $slide_cb, 'on' ); ?>/>
+						
+					</td>
+				</tr>
+				<tr>
+					<th scope="row">
+						<label for="en_slide_mobile">A select box: </label>
+					</th>
+					<td>
+						<select id="en_slide_select" name="en_slide_select">
+							<option value="">Choose a location</option>
+							<option value="1" <?php selected( '1', $slide_select); ?>>Position 1</option>
+							<option value="2" <?php selected( '2', $slide_select); ?>>Position 2</option>
+							<option value="3" <?php selected( '3', $slide_select); ?>>Position 2</option>
+							<option value="4" <?php selected( '4', $slide_select); ?>>Position 2</option>
+							<option value="5" <?php selected( '5', $slide_select); ?>>Position 2</option>
+						</select>
 						
 					</td>
 				</tr>
@@ -129,5 +156,12 @@ function en_slide_save_meta( $post_id ) {
 
 		update_post_meta( $post_id, '_en_slide_mobile',strip_tags( $_POST['en_slide_mobile'] ) );
 	}
+
+	if ( $_POST['en_slide_select'] ) {
+		update_post_meta( $post_id, '_en_slide_select', $_POST['en_slide_select'] );
+	} 
+
+	$chk = isset( $_POST['en_slide_mobile_cb'] ) ? 'on' : 'off';
+    update_post_meta( $post_id, '_en_slide_mobile_cb', $chk );
 	
 }
